@@ -1,0 +1,6 @@
+flask
+pandas
+numpy
+simple-salesforce
+snowflake-connector-python
+cryptography

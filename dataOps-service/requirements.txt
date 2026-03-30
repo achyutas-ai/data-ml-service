@@ -1,0 +1,8 @@
+pandas
+numpy
+flask
+snowflake-connector-python[pandas]
+simple-salesforce
+pycryptodomex
+python-dotenv
+cryptography

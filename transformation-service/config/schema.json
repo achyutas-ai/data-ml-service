@@ -1,0 +1,41 @@
+{
+  "service": "transformation-service",
+  "version": "1.1",
+  "transformations": [
+    {
+      "name": "PII Masking",
+      "type": "masking",
+      "fields": ["email", "phone"],
+      "authorized_flag": "Authorized",
+      "mask_value": "***MASKED***"
+    },
+    {
+      "name": "Deduplication",
+      "type": "deduplication",
+      "composite_key": ["email", "external_id"]
+    },
+    {
+      "name": "Schema Mapping",
+      "type": "mapping",
+      "source_format": "SNAKE_CASE",
+      "target_format": "PascalCase__c",
+      "mappings": {
+          "FIRST_NAME": "FirstName__c",
+          "LAST_NAME": "LastName__c",
+          "EMAIL": "Email__c",
+          "OPPORTUNITY_STAGE": "StageName",
+          "AMOUNT": "Amount",
+          "EXTERNAL_ID": "External_ID__c"
+      }
+    },
+    {
+      "name": "Logic Filter",
+      "type": "filter",
+      "object": "Opportunity",
+      "rules": [
+        {"field": "OPPORTUNITY_STAGE", "operator": "==", "value": "Closed Won"},
+        {"field": "AMOUNT", "operator": ">", "value": 5000}
+      ]
+    }
+  ]
+}
